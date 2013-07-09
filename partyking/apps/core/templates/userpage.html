@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Vota il re{% endblock %}
+
+{% block herostart %}
+    <div class="hero-unit" xmlns="http://www.w3.org/1999/html">
+        <div class="row-fluid">
+            <div class="span2">
+                <i class="icon-thumbs-up icon-5x"></i>
+            </div>
+            <div class="span8">
+                <h2>Welcome to PartyKing!</h2>
+                <p>This party rocks, now it is time to choose your king!<br>A king is the funniest,
+                    funky-moving, smarty-talking guy: choose yours!<br>Remember, you can vote <b>3 times</b>!</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block alert %}
+    <div class="alert alert-info" style="display: none">
+        <strong>Warning!</strong> You've reached the maximum votes per user, go drink some beer and have fun!
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    {% for guy in profiles %}
+        <div class="well" guyid="{{ guy.fbid }}">
+            <img src="{{ guy.picture }}" class="img-rounded">
+            {{ guy.firstname }} {{ guy.lastname }}
+            <a class="btn btn-large pull-right votebtn" active="no" href="#">
+                <i class="icon-star-empty"></i>
+            </a><br>
+        </div>
+    {% endfor %}
+
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function(){
+
+            function raiseerror(){
+                $('.alert').show()
+            }
+
+            function voteaction(button){
+                var starreduser = button.parent().attr('guyid')
+                button.children().toggleClass('icon-star-empty icon-star', 200)
+                button.toggleClass('img-rounded img-circle', 200)
+                if (button.attr('active') == 'no'){
+                    button.attr('active', 'yes')
+                    var action = 'addvote'
+                }
+                else {
+                    button.attr('active', 'no')
+                    var action = 'rmvote'
+                }
+                $.post(
+                        '/addvote/',
+                        {user : starreduser, action : action}
+                )
+            }
+
+            $('.votebtn').click(function(e){
+                var selecteduser = $(this)
+                $.get(
+                        '/addvote/',
+                        function(data){
+                            console.log('data returned from GET: '+data)
+                            if (data){
+                                // enhance the use of this button with $.proxy
+                                voteaction(selecteduser)
+                            }
+                            else{
+                                raiseerror()
+                            }
+                        }
+                )
+            })
+        })
+    </script>
+{% endblock %}

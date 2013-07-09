@@ -1,0 +1,46 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <META charset='utf-8'/>
+    {% block css %}{% endblock %}
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}"/>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <!-- navbar start -->
+    <div class="navbar navbar-static-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand" href="#">PartyKing!</a>
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li><a href="../">Chart</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="../logout">Logout</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- navbar end -->
+
+    <br>
+
+    <div class="container-fluid">
+        {% block herostart %}{% endblock %}
+        {% block alert %}{% endblock %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

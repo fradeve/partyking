@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>La classifica!</title>
+</head>
+<body>
+<ul>
+    {% for user in profiles %}
+        <img src="{{ user.picture }}"
+         <li>{{ user.firstname }} {{ user.lastname }}</li>
+        <li>{{ user.rating }}</li>
+    {% endfor %}
+</ul>
+</body>
+</html>
