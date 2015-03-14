@@ -1,15 +1,43 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>La classifica!</title>
-</head>
-<body>
-<ul>
-    {% for user in profiles %}
-        <img src="{{ user.picture }}"
-         <li>{{ user.firstname }} {{ user.lastname }}</li>
-        <li>{{ user.rating }}</li>
-    {% endfor %}
-</ul>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}La classifica!{% endblock %}
+
+{% block herostart %}
+    <h1>Hail to the king!</h1>
+{% endblock %}
+{% block content %}
+    <div class="well">
+        <ul class="media-list">
+            <li class="media">
+                <span class="badge">{{ profiles.0.rating }}</span>
+                <a class="pull-left" href="#">
+                    <img class="media-object" src="{{ profiles.0.picture }}">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">{{ profiles.0.firstname }} {{ profiles.0.lastname }}</h4>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="well">
+        <ul class="media-list">
+        {% for user in profiles|slice:"1:" %}
+            <li class="media">
+                <span class="badge">{{ user.rating }}</span>
+                <a class="pull-left" href="#">
+                    <img class="media-object" src="{{ user.picture }}">
+                </a>
+                 <div class="media-body">
+                    <h4 class="media-heading">{{ user.firstname }} {{ user.lastname }}</h4>
+                 </div>
+            </li>
+        {% endfor%}
+        </ul>
+    </div>
+{% endblock %}
+{#                <div class="span2">#}
+{#                    <div class="well">#}
+{#                        <span class="badge">{{ user.rating }}</span>#}
+{#                        <img src="{{ user.picture }}"<br>#}
+{#                    </div>#}
+{#                </div>#}

@@ -1,4 +1,10 @@
-from partyking.apps.core.models import Profile, User
+__appname__ = "PartyKing"
+__author__  = "Francesco de Virgilio (fradeve)"
+__license__ = "GNU GPL 3.0 or later"
+
+__version__ = "0.1"
+
+from partyking.apps.core.models import Profile
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required

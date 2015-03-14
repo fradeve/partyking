@@ -1,17 +1,31 @@
-# Django settings for partyking project.
-import os
+__appname__ = "PartyKing"
+__author__  = "Francesco de Virgilio (fradeve)"
+__license__ = "GNU GPL 3.0 or later"
 
-HERE = lambda x: os.path.normpath(os.path.join(os.path.abspath(os.path.dirname(__file__)), x))
+__version__ = "0.1"
+
+"""
+1 - define project path (and URL for sending invites)
+"""
+PROJECT_PATH = '/home/fradeve/git/partyking'
+PROJECT_URL = 'http://partyking.fradeve.org'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+"""
+2 - define admins
+"""
+
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Francesco de Virgilio', 'fradeve@inventati.org'),
 )
 
 MANAGERS = ADMINS
 
+"""
+3 - define database
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -66,16 +80,14 @@ STATIC_ROOT = ''
 STATIC_URL = '/static/'
 
 # Additional locations of static files
-STATICFILES_DIRS = (
-    HERE('../static/'),
-)
+STATICFILES_DIRS = ()
 
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -85,7 +97,7 @@ SECRET_KEY = 't=9l)f6y*+)!)j12_&snig99w=r*p)e@s-uc8h(g#89zqr4*7*'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -107,7 +119,6 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    HERE('../templates/'),
 )
 
 INSTALLED_APPS = (
@@ -122,10 +133,38 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'partyking.apps.core',
 )
 
 AUTH_PROFILE_MODULE = 'core.Profile'
+
+LOGIN_REDIRECT_URL = 'vote/'
+
+#Put names of all user apps here
+USER_APPS = (
+    'partyking.apps.core',
+)
+
+"""
+4 - define email backend
+    comment out the following line and uncomment the subsequents variables
+"""
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_HOST =
+#EMAIL_PORT =
+#EMAIL_HOST_USER =
+#EMAIL_HOST_PASSWORD =
+#EMAIL_USE_TLS =
+#EMAIL_USE_SSL =
+
+#We add each app to the INSTALLED_APPS variable and add the template paths to custom per-app variables.
+INSTALLED_APPS = list(INSTALLED_APPS)
+TEMPLATE_DIRS = list(TEMPLATE_DIRS)
+STATICFILES_DIRS = list(STATICFILES_DIRS)
+for app in USER_APPS:
+    INSTALLED_APPS.append(app)
+    TEMPLATE_DIRS.append(PROJECT_PATH + "/" + app.replace(".", "/") + "/templates")
+    STATICFILES_DIRS.append(PROJECT_PATH + "/" + app.replace(".", "/") + "/static")
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

@@ -3,17 +3,13 @@
 {% block title %}Vota il re{% endblock %}
 
 {% block herostart %}
-    <div class="hero-unit" xmlns="http://www.w3.org/1999/html">
-        <div class="row-fluid">
-            <div class="span2">
-                <i class="icon-thumbs-up icon-5x"></i>
-            </div>
-            <div class="span8">
-                <h2>Welcome to PartyKing!</h2>
-                <p>This party rocks, now it is time to choose your king!<br>A king is the funniest,
-                    funky-moving, smarty-talking guy: choose yours!<br>Remember, you can vote <b>3 times</b>!</p>
-            </div>
-        </div>
+    <div class="span2">
+        <i class="icon-thumbs-up icon-5x"></i>
+    </div>
+    <div class="span8">
+        <h2>Welcome to PartyKing!</h2>
+        <p>This party rocks, now it is time to choose your king!<br>A king is the funniest,
+            funky-moving, smarty-talking guy: choose yours!<br>Remember, you can vote <b>3 times</b>!</p>
     </div>
 {% endblock %}
 
@@ -26,10 +22,10 @@
 {% block content %}
 
     {% for guy in profiles %}
-        <div class="well" guyid="{{ guy.fbid }}">
+        <div class="well-small" guyid="{{ guy.fbid }}">
             <img src="{{ guy.picture }}" class="img-rounded">
-            {{ guy.firstname }} {{ guy.lastname }}
-            <a class="btn btn-large pull-right votebtn" active="no" href="#">
+            &#160;{{ guy.firstname }} {{ guy.lastname }}
+            <a class="btn btn-large pull-right votebtn" active="no">
                 <i class="icon-star-empty"></i>
             </a><br>
         </div>
@@ -45,7 +41,7 @@
             function voteaction(button){
                 var starreduser = button.parent().attr('guyid')
                 button.children().toggleClass('icon-star-empty icon-star', 200)
-                button.toggleClass('img-rounded img-circle', 200)
+                button.prev().toggleClass('img-rounded img-circle', 200)
                 if (button.attr('active') == 'no'){
                     button.attr('active', 'yes')
                     var action = 'addvote'
